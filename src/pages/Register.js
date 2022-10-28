@@ -33,7 +33,7 @@ const Register = () => {
       dispatch(loginUser({ email, password }));
       return;
     }
-    dispatch(registerUser({ email, password }));
+    dispatch(registerUser({ name, email, password }));
   };
 
   const toggleMember = () => {
@@ -68,8 +68,8 @@ const Register = () => {
           handleChange={handleChange}
         />
 
-        <button type="submit" className="btn btn-block">
-          {values.isMember ? "Login" : "Register"}
+        <button type="submit" className="btn btn-block" disabled={isLoading}>
+          {isLoading ? "Loading..." : values.isMember ? "Login" : "Register"}
         </button>
 
         <p>
