@@ -1,7 +1,36 @@
 import React from "react";
-import logo from "../assets/images/logo.svg";
 import main from "../assets/images/main.svg";
 import styled from "styled-components";
+import { Logo } from "../components";
+
+const Landing = () => {
+  return (
+    <Wrapper>
+      <nav>
+        <Logo />
+      </nav>
+      <div className="container page">
+        <div className="info">
+          <h1>
+            Job <span>Tracking </span>App
+          </h1>
+          <p>
+            Forage squid copper mug celiac pop-up, taiyaki vice organic mixtape.
+            Venmo locavore ethical, mustache iceland cornhole gochujang you
+            probably haven't heard of them beard bicycle rights selfies palo
+            santo vaporware. Yuccie fam trust fund dreamcatcher single-origin
+            coffee whatever slow-carb tote bag. Gochujang irony salvia franzen
+            chicharrones, ramps before they sold out banh mi bodega boys
+            messenger bag. Stumptown aesthetic 3 wolf moon fashion axe, raw
+            denim readymade vape man braid.
+          </p>
+          <button className="btn btn-hero">Login/Register</button>
+        </div>
+        <img src={main} alt="job search" className="img main-img" />
+      </div>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.main`
   nav {
@@ -42,33 +71,4 @@ const Wrapper = styled.main`
   }
 `;
 
-const landing = () => {
-  return (
-    <Wrapper>
-      <nav>
-        <img src={logo} alt="jobster logo" className="logo" />
-      </nav>
-      <div className="container page">
-        <div className="info">
-          <h1>
-            Job <span>Tracking </span>App
-          </h1>
-          <p>
-            Forage squid copper mug celiac pop-up, taiyaki vice organic mixtape.
-            Venmo locavore ethical, mustache iceland cornhole gochujang you
-            probably haven't heard of them beard bicycle rights selfies palo
-            santo vaporware. Yuccie fam trust fund dreamcatcher single-origin
-            coffee whatever slow-carb tote bag. Gochujang irony salvia franzen
-            chicharrones, ramps before they sold out banh mi bodega boys
-            messenger bag. Stumptown aesthetic 3 wolf moon fashion axe, raw
-            denim readymade vape man braid.
-          </p>
-          <button className="btn btn-hero">Login/Register</button>
-        </div>
-        <img src={main} alt="job search" className="img main-img" />
-      </div>
-    </Wrapper>
-  );
-};
-
-export default landing;
+export default Landing;
