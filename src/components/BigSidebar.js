@@ -1,7 +1,29 @@
 import styled from "styled-components";
-
+import NavLinks from "./NavLinks";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleSidebar } from "../features/user/userSlice";
+import Logo from "./Logo";
 const BigSidebar = () => {
-  return <Wrapper>BigSidebar</Wrapper>;
+  const dispatch = useDispatch();
+  const { isSidebarOpen } = useSelector((store) => store.user);
+  return (
+    <Wrapper>
+      <div
+        className={`${
+          !isSidebarOpen
+            ? "sidebar-container show-sidebar"
+            : "sidebar-container"
+        }`}
+      >
+        <div className="content">
+          <header>
+            <Logo />
+          </header>
+          <NavLinks toggleSidebar={() => dispatch(toggleSidebar)} />
+        </div>
+      </div>
+    </Wrapper>
+  );
 };
 const Wrapper = styled.aside`
   display: none;
