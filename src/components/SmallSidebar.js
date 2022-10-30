@@ -1,7 +1,36 @@
 import styled from "styled-components";
+import { FaTimes } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
+import Logo from "./Logo";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleSidebar } from "../features/user/userSlice";
 
 const SmallSidebar = () => {
-  return <Wrapper>Small Sidebar</Wrapper>;
+  const { isSidebarOpen } = useSelector((store) => store.user);
+  const dispatch = useDispatch();
+
+  return (
+    <Wrapper>
+      <div
+        className={`${
+          isSidebarOpen ? "sidebar-container show-sidebar" : "sidebar-container"
+        }`}
+      >
+        <div className="content">
+          <button
+            className="close-btn"
+            onClick={() => dispatch(toggleSidebar())}
+          >
+            <FaTimes />
+          </button>
+          <header>
+            <Logo />
+          </header>
+          <div className="nav-links">Dummy content for nav</div>
+        </div>
+      </div>
+    </Wrapper>
+  );
 };
 const Wrapper = styled.aside`
   @media (min-width: 992px) {

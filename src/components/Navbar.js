@@ -15,11 +15,11 @@ const Navbar = () => {
     dispatch(toggleSidebar());
   };
 
-  useEffect(() => {
-    if (!user) {
-      navigate("/register");
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     navigate("/register");
+  //   }
+  // }, [user]);
 
   return (
     <Wrapper>
