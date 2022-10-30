@@ -48,7 +48,7 @@ const userSlice = createSlice({
       state.user = null;
       state.isSidebarOpen = false;
       removeUserFromLocalStorage();
-      toast.success(`${state.user.name} You are logged out`);
+      toast.success(`${state.user?.name} You are logged out`);
     },
   },
   extraReducers: {
