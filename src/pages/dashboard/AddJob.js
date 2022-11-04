@@ -1,8 +1,15 @@
-import React from "react";
-import { FormRow } from "../../components";
+import { useEffect } from "react";
+import { FormRow, FormRowSelect } from "../../components";
 import { useSelector, useDispatch } from "react-redux";
+import {
+  handleChange,
+  clearValues,
+  createJob,
+} from "../../features/job/jobSlice";
 import styled from "styled-components";
+import { toast } from "react-toastify";
 const AddJob = () => {
+  const { user } = useSelector((store) => store.user);
   const {
     isLoading,
     position,
@@ -19,12 +26,24 @@ const AddJob = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!position || !company || !jobLocation) {
+      toast.error("Please enter all the fields");
+      return;
+    }
+    dispatch(createJob({ position, company, jobLocation, jobType, status }));
   };
 
   const handleJobInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
+    dispatch(handleChange({ name, value }));
   };
+
+  useEffect(() => {
+    if (!isEditing) {
+      dispatch(handleChange({ name: "jobLocation", value: user.location }));
+    }
+  }, []);
   return (
     <Wrapper>
       <form className="form">
@@ -49,18 +68,32 @@ const AddJob = () => {
           <FormRow
             type="text"
             name="jobLocation"
+            labelText="job location"
             value={jobLocation}
             handleChange={handleJobInput}
           />
           {/* job status */}
+          <FormRowSelect
+            name="status"
+            value={status}
+            handleChange={handleJobInput}
+            list={statusOptions}
+          />
           {/* job type */}
+          <FormRowSelect
+            name="jobType"
+            labelText="job type"
+            value={jobType}
+            handleChange={handleJobInput}
+            list={jobTypeOptions}
+          />
           {/* btn-container */}
           <div className="btn-container">
             <button
               type="button"
               className="btn btn-block clear-btn"
               onClick={() => {
-                console.log("clear Values");
+                dispatch(clearValues());
               }}
             >
               Clear
