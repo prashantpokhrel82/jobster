@@ -4,7 +4,7 @@ import authHeader from "../../utils/authHeader";
 import customFetch from "../../utils/axios";
 import { logoutUser } from "../user/userSlice";
 
-const initalFiltersState = {
+const initialFiltersState = {
   search: "",
   searchStatus: "all",
   searchType: "all",
@@ -20,7 +20,7 @@ const initialState = {
   page: 1,
   stats: {},
   monthlyApplications: [],
-  ...initalFiltersState,
+  ...initialFiltersState,
 };
 
 export const getAllJobs = createAsyncThunk(
@@ -65,6 +65,12 @@ const allJobsSlice = createSlice({
     hideLoading: (state) => {
       state.isLoading = false;
     },
+    handleChange: (state, { payload: { name, value } }) => {
+      state[name] = value;
+    },
+    clearFilters: (state) => {
+      return { ...state, ...initialFiltersState };
+    },
   },
   extraReducers: {
     [getAllJobs.pending]: (state) => {
@@ -101,5 +107,6 @@ const allJobsSlice = createSlice({
   },
 });
 
-export const { showLoading, hideLoading } = allJobsSlice.actions;
+export const { showLoading, hideLoading, handleChange, clearFilters } =
+  allJobsSlice.actions;
 export default allJobsSlice.reducer;
