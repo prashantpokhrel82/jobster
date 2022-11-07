@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { ChartContainer, StatsContainer, Loading } from "../../components";
+import { ChartsContainer, StatsContainer, Loading } from "../../components";
 import { showStats } from "../../features/allJobs/allJobsSlice";
 const Stats = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const Stats = () => {
   return (
     <>
       <StatsContainer />
-      {monthlyApplications.length > 0 && <ChartContainer />}
+      {monthlyApplications.length > 0 && <ChartsContainer />}
     </>
   );
 };
