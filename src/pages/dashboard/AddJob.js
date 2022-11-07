@@ -5,6 +5,7 @@ import {
   handleChange,
   clearValues,
   createJob,
+  editJob,
 } from "../../features/job/jobSlice";
 import styled from "styled-components";
 import { toast } from "react-toastify";
@@ -28,6 +29,11 @@ const AddJob = () => {
     e.preventDefault();
     if (!position || !company || !jobLocation) {
       toast.error("Please enter all the fields");
+      return;
+    }
+    if (isEditing) {
+      const job = { position, company, jobLocation, jobType, status };
+      dispatch(editJob({ jobId: editJobId, job }));
       return;
     }
     dispatch(createJob({ position, company, jobLocation, jobType, status }));

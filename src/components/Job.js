@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import JobInfo from "./JobInfo";
 import moment from "moment";
+import { deleteJob, setEditJob } from "../features/job/jobSlice";
 const Job = ({
   _id,
   position,
@@ -38,7 +39,16 @@ const Job = ({
               to="/add-job"
               className="btn edit-btn"
               onClick={() => {
-                console.log("edit job");
+                dispatch(
+                  setEditJob({
+                    editJobId: _id,
+                    position,
+                    company,
+                    jobLocation,
+                    jobType,
+                    status,
+                  })
+                );
               }}
             >
               Edit
@@ -47,7 +57,7 @@ const Job = ({
               type="button"
               className="btn delete-btn"
               onClick={() => {
-                console.log("delete job");
+                dispatch(deleteJob(_id));
               }}
             >
               Delete
