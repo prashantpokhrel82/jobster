@@ -4,13 +4,11 @@ import Logo from "./Logo";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleSidebar, clearStore } from "../features/user/userSlice";
-import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { user } = useSelector((store) => store.user);
   const [showLogout, setShowLogout] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const toggle = () => {
     dispatch(toggleSidebar());
   };
