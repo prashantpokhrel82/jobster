@@ -1,6 +1,5 @@
 import authHeader from "../../utils/authHeader";
-import customFetch from "../../utils/axios";
-import { logoutUser } from "../user/userSlice";
+import customFetch, { checkForUnauthorizedResponse } from "../../utils/axios";
 
 export const getAllJobsThunk = async (_, thunkAPI) => {
   const { search, searchStatus, searchType, sort, page } =
@@ -13,10 +12,7 @@ export const getAllJobsThunk = async (_, thunkAPI) => {
     const response = await customFetch.get(url, authHeader(thunkAPI));
     return response.data;
   } catch (error) {
-    if (error.response.status === 401) {
-      thunkAPI.dispatch(logoutUser());
-    }
-    return thunkAPI.rejectWithValue(error.response.data.msg);
+    checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
 
@@ -26,6 +22,6 @@ export const showStatsThunk = async (_, thunkAPI) => {
     console.log(response.data);
     return response.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
+    checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
