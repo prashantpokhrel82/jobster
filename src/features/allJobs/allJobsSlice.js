@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import authHeader from "../../utils/authHeader";
-import customFetch from "../../utils/axios";
-import { logoutUser } from "../user/userSlice";
+import { getAllJobsThunk, showStatsThunk } from "./allJobsThunk";
 
 const initialFiltersState = {
   search: "",
@@ -25,40 +23,10 @@ const initialState = {
 
 export const getAllJobs = createAsyncThunk(
   "allJobs/getAllJobs",
-  async (_, thunkAPI) => {
-    const { search, searchStatus, searchType, sort, page } =
-      thunkAPI.getState().allJobs;
-    let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}&page=${page}`;
-    if (search) {
-      url += `&search=${search}`;
-    }
-    try {
-      const response = await customFetch.get(url, authHeader(thunkAPI));
-      return response.data;
-    } catch (error) {
-      if (error.response.status === 401) {
-        thunkAPI.dispatch(logoutUser());
-      }
-      return thunkAPI.rejectWithValue(error.response.data.msg);
-    }
-  }
+  getAllJobsThunk
 );
 
-export const showStats = createAsyncThunk(
-  "allJobs/showStats",
-  async (_, thunkAPI) => {
-    try {
-      const response = await customFetch.get(
-        "/jobs/stats",
-        authHeader(thunkAPI)
-      );
-      console.log(response.data);
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.msg);
-    }
-  }
-);
+export const showStats = createAsyncThunk("allJobs/showStats", showStatsThunk);
 
 const allJobsSlice = createSlice({
   name: "allJobs",
@@ -71,6 +39,7 @@ const allJobsSlice = createSlice({
       state.isLoading = false;
     },
     handleChange: (state, { payload: { name, value } }) => {
+      state.page = 1;
       state[name] = value;
     },
     clearFilters: (state) => {
@@ -79,6 +48,7 @@ const allJobsSlice = createSlice({
     changePage: (state, { payload }) => {
       state.page = payload;
     },
+    clearAllJobState: (state) => initialState,
   },
   extraReducers: {
     [getAllJobs.pending]: (state) => {
@@ -121,5 +91,6 @@ export const {
   handleChange,
   clearFilters,
   changePage,
+  clearAllJobState,
 } = allJobsSlice.actions;
 export default allJobsSlice.reducer;

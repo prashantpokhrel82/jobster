@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { FaAlignLeft, FaUserCircle, FaCaretDown } from "react-icons/fa";
 import Logo from "./Logo";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleSidebar, logoutUser } from "../features/user/userSlice";
+import { toggleSidebar, clearStore } from "../features/user/userSlice";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
@@ -14,12 +14,6 @@ const Navbar = () => {
   const toggle = () => {
     dispatch(toggleSidebar());
   };
-
-  // useEffect(() => {
-  //   if (!user) {
-  //     navigate("/register");
-  //   }
-  // }, [user]);
 
   return (
     <Wrapper>
@@ -49,7 +43,7 @@ const Navbar = () => {
               type="button"
               className="dropdown-btn"
               onClick={() => {
-                dispatch(logoutUser("Logging out..."));
+                dispatch(clearStore("Logging out..."));
               }}
             >
               logout
